@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Task List</title>
+        <style>
+            table {
+                width: 80%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            } 
+
+            table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            }
+
+            table th {
+                text-align: center;
+            }
+
+            table td input[type="checkbox"] {
+                display: block;
+                margin: 0 auto;
+            }
+
+            table td a {
+                text-decoration: none;
+                margin-right: 10px; 
+                display: inline-block; 
+            }
+            
+            body {
+                display: flex;
+                font-family: sans-serif;
+                line-height: 1.5;
+                min-height: 100vh;
+                background: #f3f3f3;
+                flex-direction: column;
+                margin: 0;
+            }
+        
+            .main {
+                background-color: #fff;
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+                padding: 10px 20px;
+                transition: transform 0.2s;
+                width: 500px;
+                text-align: center;
+            }
+        
+            h1 {
+                color: #4CAF50
+            }
+        
+            button {
+                padding: 5px;
+                border-radius: 10px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                border: none;
+                color: white;
+                cursor: pointer;
+                background-color: #4CAF50;
+                width: auto;
+                font-size: 16px;
+            }
+
+            .footer {
+                text-decoration: none;
+                margin-right: 10px; 
+                display: inline-block;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Task List:</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Completed</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td><input type="checkbox" {% if task.completed %}checked{% endif %}></td>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>
+                            <a href="{% url 'task_detail' task.pk %}"><button>View</button></a>
+                            <a href="{% url 'task_edit' task.pk %}"><button>Edit</button></a>
+                            <a href="{% url 'task_delete' task.pk %}"><button>Delete</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <a href="{% url 'task_create' %}"><button>Create new task</button></a>
+            <a href="{% url 'home' %}"><button>Back to homepage</button></a>
+        </div>
+
+    </body>
+</html>
